@@ -6,7 +6,7 @@ const MIN_Y = 130;
 const MAX_Y = 630;
 const MIN_X = 0;
 const MAX_X = 1200;
-const PIN_HEIGTH = 70;
+const PIN_HEIGHT = 70;
 const PIN_WIDTH = 50;
 const AMOUNT_PINS = 8;
 const CHEKIN_OPTIONS = [
@@ -118,7 +118,7 @@ const getPin = (templateObject) => {
   const pinElement = similarPinTemplate.cloneNode(true);
 
   pinElement.style.left = `${templateObject.location.x - (PIN_WIDTH / 2)}px`;
-  pinElement.style.top = `${templateObject.location.y - PIN_HEIGTH}px`;
+  pinElement.style.top = `${templateObject.location.y - PIN_HEIGHT}px`;
   pinElement.querySelector(`img`).src = templateObject.author.avatar;
   pinElement.querySelector(`img`).alt = templateObject.offer.title;
 
@@ -242,8 +242,6 @@ const addPins = (preparedPins) => {
   similarListPins.appendChild(fragment);
 };
 
-const pins = getBookingItems(AMOUNT_PINS);
-
 // Отключение формы
 
 const mainPin = document.querySelector(`.map__pin--main`);
@@ -252,9 +250,9 @@ const addressData = document.querySelector(`#address`);
 const fieldsets = document.getElementsByTagName(`fieldset`);
 const leftMouseButtonDown = 0;
 const MAIN_PIN_WIDTH = 62;
-const MAIN_PIN_HEIGTH = 62;
-const pinHeigthDisable = MAIN_PIN_HEIGTH / 2;
-const pinHeigthActive = 84;
+const MAIN_PIN_HEIGHT = 62;
+const pinHeightDisable = MAIN_PIN_HEIGHT / 2;
+const pinHeightActive = 84;
 
 const formTurnOff = () => {
   for (let i = 0; i < fieldsets.length; i++) {
@@ -263,6 +261,8 @@ const formTurnOff = () => {
 };
 
 // Адрес
+
+addressData.setAttribute(`readonly`, true);
 
 const getAddress = (pinHeight) => {
   addressData.value = Math.floor(parseInt(mainPin.style.left, 10) + MAIN_PIN_WIDTH / 2) + `, ` + Math.floor((parseInt(mainPin.style.top, 10) + pinHeight));
@@ -280,29 +280,31 @@ const formTurnOn = function formTurnOn() {
 
 const onMainPinMouseDown = (evt) => {
   if (evt.button === leftMouseButtonDown) {
-    getActivePages();
+    activatePage();
   }
 };
 
 const onMainPinKeyDown = (evt) => {
   if (evt.key === `Enter`) {
-    getActivePages();
+    activatePage();
   }
 };
 
 const getDisablePages = () => {
-  getAddress(pinHeigthDisable);
+  getAddress(pinHeightDisable);
   formTurnOff();
   mainPin.addEventListener(`mousedown`, onMainPinMouseDown);
   mainPin.addEventListener(`keydown`, onMainPinKeyDown);
 };
 
-const getActivePages = () => {
+const activatePage = () => {
   mainForm.classList.remove(`ad-form--disabled`);
-  getAddress(pinHeigthActive);
+  getAddress(pinHeightActive);
   getMapActive();
   formTurnOn();
+  const pins = getBookingItems(AMOUNT_PINS);
   addPins(pins);
+  disableCapacityOptions(roomNumberSelect.value);
   mainPin.removeEventListener(`mousedown`, onMainPinMouseDown);
   mainPin.removeEventListener(`keydown`, onMainPinKeyDown);
 };
@@ -320,16 +322,11 @@ const roomGuestRation = {
 
 const roomNumberSelect = document.querySelector(`#room_number`);
 const capacitySelect = document.querySelector(`#capacity`);
-const submitButton = document.querySelector(`.ad-form__submit`);
 
 const checkPlaceValidity = () => {
   const roomGuests = roomGuestRation[roomNumberSelect.value];
   const message = roomGuests.indexOf(+capacitySelect.value) === -1 ? `Столько гостей не сможет разместиться, предложите больше комнат` : ``;
   capacitySelect.setCustomValidity(message);
-};
-
-const onSubmitButtonClick = () => {
-  checkPlaceValidity();
 };
 
 const disableCapacityOptions = (inputValue) => {
@@ -346,10 +343,10 @@ const disableCapacityOptions = (inputValue) => {
 const onRoomNumberSelectChange = (evt) => {
   evt.target.setCustomValidity(``);
   disableCapacityOptions(roomNumberSelect.value);
+  checkPlaceValidity();
 };
 
 roomNumberSelect.addEventListener(`change`, onRoomNumberSelectChange);
-submitButton.addEventListener(`click`, onSubmitButtonClick);
 
 
 // Функция для отрисовки объявления

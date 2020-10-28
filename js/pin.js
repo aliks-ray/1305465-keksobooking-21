@@ -67,6 +67,7 @@
     getAddress,
     mainPin,
     pinHeightActive,
-    pinHeightDisable
+    pinHeightDisable,
+    removeClassActivePin
   };
 })();

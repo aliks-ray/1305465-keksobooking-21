@@ -27,12 +27,12 @@
   };
 
   const activatePage = () => {
-    window.form.mainForm.classList.remove(`ad-form--disabled`);
+    window.validation.mainForm.classList.remove(`ad-form--disabled`);
     window.pin.getAddress(window.pin.pinHeightActive);
     getMapActive();
     window.form.formTurnOn();
     window.pin.addPins(window.data.pins);
-    window.form.disableCapacityOptions(window.form.capacitySelect.value);
+    window.validation.checkFormValidity();
     window.pin.mainPin.removeEventListener(`mousedown`, onMainPinMouseDown);
     window.pin.mainPin.removeEventListener(`keydown`, onMainPinKeyDown);
   };

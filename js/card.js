@@ -68,6 +68,7 @@
 
     const onCardCloseButtonClick = function () {
       removeCard();
+      window.pin.removeClassActivePin();
       popupCloseButton.removeEventListener(`click`, onCardCloseButtonClick);
       document.removeEventListener(`keydown`, onCardEscapePress);
     };
@@ -75,12 +76,14 @@
     const onCardCloseButtonEnterPress = function (evt) {
       if (evt.key === `Enter`) {
         removeCard();
+        window.pin.removeClassActivePin();
       }
     };
 
     const onCardEscapePress = function (evt) {
       if (evt.key === `Escape`) {
         removeCard();
+        window.pin.removeClassActivePin();
       }
       popupCloseButton.removeEventListener(`click`, onCardCloseButtonClick);
       document.removeEventListener(`keydown`, onCardEscapePress);

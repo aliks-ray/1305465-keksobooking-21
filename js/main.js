@@ -27,6 +27,7 @@
   };
 
   const activatePage = () => {
+
     window.validation.mainForm.classList.remove(`ad-form--disabled`);
     window.pin.getAddress(window.pin.pinHeightActive);
     getMapActive();

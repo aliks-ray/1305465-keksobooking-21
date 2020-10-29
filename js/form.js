@@ -1,6 +1,5 @@
 'use strict';
 (() => {
-
   const fieldsets = document.getElementsByTagName(`fieldset`);
 
   const formTurnOff = () => {

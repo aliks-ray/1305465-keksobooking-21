@@ -4,6 +4,7 @@
   const PHOTO_HEIGHT = 40;
 
   const similarCardTemplate = document.querySelector(`#card`).content.querySelector(`.map__card`);
+
   const beforeThisBlock = document.querySelector(`.map__filters-container`);
   let cardElement;
 
@@ -44,6 +45,7 @@
       выезд до ${bookingItem.offer.checkout}`;
     cardDescription.textContent = bookingItem.offer.description;
     cardAvatar.setAttribute(`src`, `${bookingItem.author.avatar}`);
+
 
     while (featureElement.firstChild) {
       featureElement.removeChild(featureElement.firstChild);

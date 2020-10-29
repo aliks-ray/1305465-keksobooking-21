@@ -13,6 +13,13 @@
   const mainPin = document.querySelector(`.map__pin--main`);
   const addressData = document.querySelector(`#address`);
 
+  const removeClassActivePin = function () {
+    let activePin = document.querySelector(`.map__pin--active`);
+    if (activePin) {
+      activePin.classList.remove(`map__pin--active`);
+    }
+  };
+
   const getPin = (templateObject) => {
 
     const pinElement = similarPinTemplate.cloneNode(true);
@@ -21,6 +28,18 @@
     pinElement.style.top = `${templateObject.location.y - PIN_HEIGHT}px`;
     pinElement.querySelector(`img`).src = templateObject.author.avatar;
     pinElement.querySelector(`img`).alt = templateObject.offer.title;
+
+    pinElement.addEventListener(`click`, function () {
+      removeClassActivePin();
+      pinElement.classList.add(`map__pin--active`);
+      window.card.createCard(templateObject);
+    });
+
+    pinElement.addEventListener(`keydown`, function (evt) {
+      if (evt.key === `Enter`) {
+        window.card.createCard(templateObject);
+      }
+    });
 
     return pinElement;
   };
@@ -49,6 +68,6 @@
     mainPin,
     pinHeightActive,
     pinHeightDisable,
-    similarListPins
+    removeClassActivePin
   };
 })();

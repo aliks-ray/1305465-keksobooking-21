@@ -98,7 +98,6 @@
   const pins = getBookingItems(AMOUNT_PINS);
 
   window.data = {
-    pins,
-    getBookingItems
+    pins
   };
 })();

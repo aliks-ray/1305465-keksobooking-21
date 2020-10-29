@@ -5,10 +5,22 @@
 
   const similarCardTemplate = document.querySelector(`#card`).content.querySelector(`.map__card`);
 
+  const beforeThisBlock = document.querySelector(`.map__filters-container`);
+  let cardElement;
+
+  const removeCard = function () {
+    if (cardElement) {
+      cardElement.remove();
+    }
+  };
+
   const createCard = (bookingItem) => {
-    const cardElement = similarCardTemplate.cloneNode(true);
+    removeCard();
+
+    cardElement = similarCardTemplate.cloneNode(true);
     const featureElement = cardElement.querySelector(`.popup__features`);
     const photoElement = cardElement.querySelector(`.popup__photos`);
+    const popupCloseButton = cardElement.querySelector(`.popup__close`);
 
     const cardTitle = cardElement.querySelector(`.popup__title`);
     const cardAddress = cardElement.querySelector(`.popup__text--address`);
@@ -31,16 +43,17 @@
     cardTime.textContent =
       `Заезд после ${bookingItem.offer.checkin},
       выезд до ${bookingItem.offer.checkout}`;
+    cardDescription.textContent = bookingItem.offer.description;
+    cardAvatar.setAttribute(`src`, `${bookingItem.author.avatar}`);
+
 
     while (featureElement.firstChild) {
       featureElement.removeChild(featureElement.firstChild);
     }
     for (let i = 0; i < bookingItem.offer.features.length; i++) {
       featureElement.appendChild(document.createElement(`li`))
-      .classList.add(`popup__feature`, `popup__feature--${bookingItem.offer.features[i]}`);
+        .classList.add(`popup__feature`, `popup__feature--${bookingItem.offer.features[i]}`);
     }
-
-    cardDescription.textContent = bookingItem.offer.description;
 
     while (photoElement.firstChild) {
       photoElement.removeChild(photoElement.firstChild);
@@ -55,20 +68,37 @@
       photoElement.appendChild(img).classList.add(`popup__photo`);
     }
 
-    cardAvatar.setAttribute(`src`, `${bookingItem.author.avatar}`);
+    const onCardCloseButtonClick = function () {
+      removeCard();
+      window.pin.removeClassActivePin();
+      popupCloseButton.removeEventListener(`click`, onCardCloseButtonClick);
+      document.removeEventListener(`keydown`, onCardEscapePress);
+    };
 
-    return cardElement;
-  };
+    const onCardCloseButtonEnterPress = function (evt) {
+      if (evt.key === `Enter`) {
+        removeCard();
+        window.pin.removeClassActivePin();
+      }
+    };
 
-  const addCards = (preparedCards) => {
+    const onCardEscapePress = function (evt) {
+      if (evt.key === `Escape`) {
+        removeCard();
+        window.pin.removeClassActivePin();
+      }
+      popupCloseButton.removeEventListener(`click`, onCardCloseButtonClick);
+      document.removeEventListener(`keydown`, onCardEscapePress);
+    };
 
-    preparedCards.forEach(function (element) {
-      window.main.map.appendChild(createCard(element));
-    });
+    popupCloseButton.addEventListener(`click`, onCardCloseButtonClick);
+    popupCloseButton.addEventListener(`keydown`, onCardCloseButtonEnterPress);
+    document.addEventListener(`keydown`, onCardEscapePress);
+    window.main.map.insertBefore(cardElement, beforeThisBlock);
   };
 
   window.card = {
     createCard,
-    addCards
+    removeCard,
   };
 })();

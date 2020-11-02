@@ -20,22 +20,21 @@
   };
 
   const getDisablePages = () => {
-    window.pin.getAddress(window.pin.pinHeightDisable);
+    window.mainpin.getAddress(window.mainpin.pinHeightDisable);
     window.form.formTurnOff();
-    window.pin.mainPin.addEventListener(`mousedown`, onMainPinMouseDown);
-    window.pin.mainPin.addEventListener(`keydown`, onMainPinKeyDown);
+    window.mainpin.mainPin.addEventListener(`mousedown`, onMainPinMouseDown);
+    window.mainpin.mainPin.addEventListener(`keydown`, onMainPinKeyDown);
   };
 
   const activatePage = () => {
 
     window.validation.mainForm.classList.remove(`ad-form--disabled`);
-    window.pin.getAddress(window.pin.pinHeightActive);
     getMapActive();
     window.form.formTurnOn();
     window.pin.addPins(window.data.pins);
     window.validation.checkFormValidity();
-    window.pin.mainPin.removeEventListener(`mousedown`, onMainPinMouseDown);
-    window.pin.mainPin.removeEventListener(`keydown`, onMainPinKeyDown);
+    window.mainpin.mainPin.removeEventListener(`mousedown`, onMainPinMouseDown);
+    window.mainpin.mainPin.removeEventListener(`keydown`, onMainPinKeyDown);
   };
 
   getDisablePages();

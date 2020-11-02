@@ -4,7 +4,6 @@
   const MAIN_PIN_HEIGHT = 62;
   const pinHeightDisable = MAIN_PIN_HEIGHT / 2;
   const ACTIVE_PIN_HEIGTH = 84;
-  const pinHeightActive = ACTIVE_PIN_HEIGTH - 22;
 
   const mainPin = document.querySelector(`.map__pin--main`);
   const addressData = document.querySelector(`#address`);
@@ -25,8 +24,8 @@
   };
 
   const limits = {
-    top: Math.floor(Borders.TOP - MAIN_PIN_HEIGHT / 2),
-    bottom: Math.floor(Borders.BOTTOM - MAIN_PIN_HEIGHT / 2),
+    top: Math.floor(Borders.TOP - ACTIVE_PIN_HEIGTH),
+    bottom: Math.floor(Borders.BOTTOM - ACTIVE_PIN_HEIGTH),
     left: Math.floor(Borders.LEFT - MAIN_PIN_WIDTH / 2),
     right: Math.floor(Borders.RIGHT - MAIN_PIN_WIDTH / 2),
   };
@@ -70,7 +69,7 @@
           drivenElement.style.left = `${drivenElement.offsetLeft - shift.x}px`;
         }
 
-        getAddress(pinHeightActive);
+        getAddress(ACTIVE_PIN_HEIGTH);
       };
 
       const onMouseUp = function (upEvt) {
@@ -92,7 +91,6 @@
   window.mainpin = {
     getAddress,
     mainPin,
-    pinHeightActive,
     pinHeightDisable,
     moveMainPin
   };

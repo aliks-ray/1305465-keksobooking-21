@@ -1,20 +1,12 @@
 'use strict';
 (() => {
-  const MAIN_PIN_WIDTH = 62;
-  const MAIN_PIN_HEIGHT = 62;
-  const pinHeightDisable = MAIN_PIN_HEIGHT / 2;
-  const ACTIVE_PIN_HEIGTH = 84;
-
   const mainPin = document.querySelector(`.map__pin--main`);
   const addressData = document.querySelector(`#address`);
 
-  addressData.setAttribute(`readonly`, true);
-
-  const getAddress = (pinHeight) => {
-    addressData.value = Math.floor(parseInt(mainPin.style.left, 10) + MAIN_PIN_WIDTH / 2) + `, ` + Math.floor((parseInt(mainPin.style.top, 10) + pinHeight));
-  };
-
-  getAddress();
+  const MAIN_PIN_WIDTH = 62;
+  const MAIN_PIN_HEIGHT = 62;
+  const pinHeightDisable = MAIN_PIN_HEIGHT / 2;
+  const ACTIVE_PIN_HEIGHT = 84;
 
   const Borders = {
     TOP: 130,
@@ -24,11 +16,17 @@
   };
 
   const limits = {
-    top: Math.floor(Borders.TOP - ACTIVE_PIN_HEIGTH),
-    bottom: Math.floor(Borders.BOTTOM - ACTIVE_PIN_HEIGTH),
+    top: Math.floor(Borders.TOP - ACTIVE_PIN_HEIGHT),
+    bottom: Math.floor(Borders.BOTTOM - ACTIVE_PIN_HEIGHT),
     left: Math.floor(Borders.LEFT - MAIN_PIN_WIDTH / 2),
     right: Math.floor(Borders.RIGHT - MAIN_PIN_WIDTH / 2),
   };
+
+  const getAddress = (pinHeight) => {
+    addressData.value = Math.floor(parseInt(mainPin.style.left, 10) + MAIN_PIN_WIDTH / 2) + `, ` + Math.floor((parseInt(mainPin.style.top, 10) + pinHeight));
+  };
+
+  getAddress();
 
   const moveMainPin = (targetElement, drivenElement) => {
     const onTargetElementMouseMove = (evt) => {
@@ -53,23 +51,25 @@
           y: moveEvt.clientY
         };
 
-        if (parseInt(drivenElement.style.top, 10) > limits.bottom) {
-          drivenElement.style.top = `${limits.bottom}px`;
-        } else if (parseInt(drivenElement.style.top, 10) < limits.top) {
-          drivenElement.style.top = `${limits.top}px`;
-        } else {
-          drivenElement.style.top = `${drivenElement.offsetTop - shift.y}px`;
+        let newPositionY = drivenElement.style.top = (drivenElement.offsetTop - shift.y);
+        let newPositionX = drivenElement.style.left = (drivenElement.offsetLeft - shift.x);
+
+        if (newPositionY >= (limits.bottom)) {
+          newPositionY = limits.bottom;
+        } else if (newPositionY <= limits.top) {
+          newPositionY = limits.top;
         }
 
-        if (parseInt(drivenElement.style.left, 10) > limits.right) {
-          drivenElement.style.left = `${limits.right}px`;
-        } else if (parseInt(drivenElement.style.left, 10) < limits.left) {
-          drivenElement.style.left = `${limits.left}px`;
-        } else {
-          drivenElement.style.left = `${drivenElement.offsetLeft - shift.x}px`;
+        if (newPositionX <= (limits.left)) {
+          newPositionX = limits.left;
+        } else if (newPositionX > limits.right) {
+          newPositionX = limits.right;
         }
 
-        getAddress(ACTIVE_PIN_HEIGTH);
+        drivenElement.style.top = newPositionY + `px`;
+        drivenElement.style.left = newPositionX + `px`;
+
+        getAddress(ACTIVE_PIN_HEIGHT);
       };
 
       const onMouseUp = function (upEvt) {
@@ -88,10 +88,11 @@
 
   moveMainPin(mainPin, mainPin);
 
-  window.mainpin = {
+  window.move = {
     getAddress,
     mainPin,
     pinHeightDisable,
+    ACTIVE_PIN_HEIGHT,
     moveMainPin
   };
 })();

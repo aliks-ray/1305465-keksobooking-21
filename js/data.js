@@ -4,7 +4,7 @@
   const MAX_Y = 630;
   const MIN_X = 0;
   const MAX_X = 1200;
-  const AMOUNT_PINS = 8;
+  const AMOUNT_PINS = 10;
   const CHEKIN_OPTIONS = [
     `12:00`,
     `13:00`,
@@ -98,6 +98,7 @@
   const pins = getBookingItems(AMOUNT_PINS);
 
   window.data = {
-    pins
+    pins,
+    offerTypes
   };
 })();

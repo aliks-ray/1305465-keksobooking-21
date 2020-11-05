@@ -10,8 +10,8 @@
     OK: 200
   };
 
-  let createRequest = function (method, url, onLoad, onError) {
-    let xhr = new XMLHttpRequest();
+  const createRequest = function (method, url, onLoad, onError) {
+    const xhr = new XMLHttpRequest();
     xhr.responseType = `json`;
 
     xhr.addEventListener(`load`, function () {
@@ -39,17 +39,17 @@
     return xhr;
   };
 
-  let load = function (onLoad, onError) {
-    let xhr = createRequest(`GET`, LOAD, onLoad, onError);
+  const load = function (onLoad, onError) {
+    const xhr = createRequest(`GET`, LOAD, onLoad, onError);
     xhr.send();
   };
 
-  let save = function (data, onLoad, onError) {
-    let xhr = createRequest(`POST`, SAVE, onLoad, onError);
+  const save = function (data, onLoad, onError) {
+    const xhr = createRequest(`POST`, SAVE, onLoad, onError);
     xhr.send(data);
   };
 
-  let onError = (errorMessage) => {
+  const onError = (errorMessage) => {
     const errorElement = document.createElement(`div`);
     errorElement.style =
     `z-index: 100;

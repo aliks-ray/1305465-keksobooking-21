@@ -32,7 +32,7 @@
     getMapActive();
     window.form.formTurnOn();
     window.move.getAddress(window.move.ACTIVE_PIN_HEIGHT);
-    window.pin.addPins(window.data.pins);
+    window.pin.renderPins();
     window.validation.checkFormValidity();
     window.move.mainPin.removeEventListener(`mousedown`, onMainPinMouseDown);
     window.move.mainPin.removeEventListener(`keydown`, onMainPinKeyDown);

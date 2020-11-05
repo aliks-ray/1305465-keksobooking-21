@@ -47,8 +47,13 @@
     similarListPins.appendChild(fragment);
   };
 
+  const renderPins = function () {
+    window.backend.load(addPins, window.backend.onError);
+  };
+
   window.pin = {
     addPins,
+    renderPins,
     removeClassActivePin
   };
 })();

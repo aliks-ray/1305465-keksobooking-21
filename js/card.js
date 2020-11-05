@@ -34,7 +34,7 @@
     cardTitle.textContent = bookingItem.offer.title;
     cardAddress.textContent = bookingItem.offer.address;
     cardPrice.textContent = `${bookingItem.offer.price} ₽/ночь`;
-    cardType.textContent = bookingItem.offer.type;
+    cardType.textContent = window.data.offerTypes[bookingItem.offer.type];
     cardCapacity.textContent =
       `${bookingItem.offer.rooms}
       ${window.util.getNoun(bookingItem.offer.rooms, `комната`, `комнаты`, `комнат`)}

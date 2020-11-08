@@ -51,9 +51,25 @@
     window.backend.load(addPins, window.backend.onError);
   };
 
+  const pinsRemover = () => {
+    const pinsItems = document.querySelectorAll(`.map__pin:not(.map__pin--main)`);
+    for (let i = 0; i < pinsItems.length; i++) {
+      pinsItems[i].remove();
+    }
+  };
+
+  const cardRemover = () => {
+    const mapCard = document.querySelector(`.map__card`);
+    if (mapCard) {
+      window.card.removeCard();
+    }
+  };
+
   window.pin = {
     addPins,
     renderPins,
-    removeClassActivePin
+    removeClassActivePin,
+    pinsRemover,
+    cardRemover
   };
 })();

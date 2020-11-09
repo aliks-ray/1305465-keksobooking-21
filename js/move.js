@@ -7,6 +7,8 @@
   const MAIN_PIN_HEIGHT = 62;
   const pinHeightDisable = MAIN_PIN_HEIGHT / 2;
   const ACTIVE_PIN_HEIGHT = 84;
+  const defaultPinX = mainPin.style.left;
+  const defaultPinY = mainPin.style.top;
 
   const Borders = {
     TOP: 130,
@@ -27,6 +29,11 @@
   };
 
   getAddress();
+
+  let getDefaultPinPosition = () => {
+    mainPin.style.left = defaultPinX;
+    mainPin.style.top = defaultPinY;
+  };
 
   const moveMainPin = (targetElement, drivenElement) => {
     const onTargetElementMouseMove = (evt) => {
@@ -93,6 +100,7 @@
     mainPin,
     pinHeightDisable,
     ACTIVE_PIN_HEIGHT,
-    moveMainPin
+    moveMainPin,
+    getDefaultPinPosition
   };
 })();

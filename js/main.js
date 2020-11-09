@@ -24,6 +24,7 @@
     window.pin.cardRemover();
     map.classList.add(`map--faded`);
     window.validation.mainForm.classList.add(`ad-form--disabled`);
+    window.move.getDefaultPinPosition();
     window.move.getAddress(window.move.pinHeightDisable);
     window.form.formTurnOff();
     window.move.mainPin.addEventListener(`mousedown`, onMainPinMouseDown);

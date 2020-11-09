@@ -86,9 +86,9 @@
   });
 
   mainFormReset.addEventListener(`click`, () => {
-    window.main.getDisablePages();
     window.validation.mainForm.reset();
     window.validation.checkFormValidity();
+    window.main.getDisablePages();
   });
 
   window.form = {

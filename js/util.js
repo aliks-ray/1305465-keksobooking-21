@@ -1,5 +1,8 @@
 'use strict';
 (() => {
+  const DEBOUNCE_INTERVAL = 500;
+  let lastTimeout;
+
   const getRandomNumber = (max, min = 0) => {
     return Math.floor(Math.random() * (max - min) + min);
   };
@@ -42,11 +45,20 @@
     return five;
   }
 
+  const debounce = (cb) => {
+    if (lastTimeout) {
+      window.clearTimeout(lastTimeout);
+    }
+    lastTimeout = window.setTimeout(cb, DEBOUNCE_INTERVAL);
+  };
+
+
   window.util = {
     getRandomNumber,
     getRandomElement,
     getRandomProperty,
     getRandomArray,
-    getNoun
+    getNoun,
+    debounce
   };
 })();

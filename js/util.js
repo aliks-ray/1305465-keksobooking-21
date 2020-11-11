@@ -42,11 +42,23 @@
     return five;
   }
 
+  function debounce(cb) {
+    const DEBOUNCE_INTERVAL = 500;
+    let lastTimeout = false;
+    return function (evt) {
+      if (lastTimeout) {
+        clearTimeout(lastTimeout);
+      }
+      lastTimeout = setTimeout(cb.bind(null, evt), DEBOUNCE_INTERVAL);
+    };
+  }
+
   window.util = {
     getRandomNumber,
     getRandomElement,
     getRandomProperty,
     getRandomArray,
-    getNoun
+    getNoun,
+    debounce
   };
 })();

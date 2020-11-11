@@ -32,12 +32,11 @@
   };
 
   const activatePage = () => {
-
     window.validation.mainForm.classList.remove(`ad-form--disabled`);
     getMapActive();
     window.form.formTurnOn();
     window.move.getAddress(window.move.ACTIVE_PIN_HEIGHT);
-    window.pin.renderPins();
+    window.backend.load(window.filter.onDataLoad, window.backend.onError);
     window.validation.checkFormValidity();
     window.move.mainPin.removeEventListener(`mousedown`, onMainPinMouseDown);
     window.move.mainPin.removeEventListener(`keydown`, onMainPinKeyDown);

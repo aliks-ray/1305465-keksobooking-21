@@ -2,6 +2,7 @@
 (() => {
   const PIN_HEIGHT = 70;
   const PIN_WIDTH = 50;
+  const PINS_MAX = 5;
 
   const similarPinTemplate = document.querySelector(`#pin`).content.querySelector(`.map__pin`);
   const similarListPins = document.querySelector(`.map__pins`);
@@ -38,6 +39,8 @@
   };
 
   const addPins = (preparedPins) => {
+    window.pin.cardRemover();
+    window.pin.pinsRemover();
     const fragment = document.createDocumentFragment();
 
     preparedPins.forEach(function (element) {
@@ -45,10 +48,6 @@
     });
 
     similarListPins.appendChild(fragment);
-  };
-
-  const renderPins = function () {
-    window.backend.load(addPins, window.backend.onError);
   };
 
   const pinsRemover = () => {
@@ -67,9 +66,9 @@
 
   window.pin = {
     addPins,
-    renderPins,
     removeClassActivePin,
     pinsRemover,
-    cardRemover
+    cardRemover,
+    PINS_MAX
   };
 })();

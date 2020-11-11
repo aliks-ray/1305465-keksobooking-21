@@ -1,8 +1,5 @@
 'use strict';
 (() => {
-  const DEBOUNCE_INTERVAL = 500;
-  let lastTimeout;
-
   const getRandomNumber = (max, min = 0) => {
     return Math.floor(Math.random() * (max - min) + min);
   };
@@ -45,13 +42,16 @@
     return five;
   }
 
-  const debounce = (cb) => {
-    if (lastTimeout) {
-      window.clearTimeout(lastTimeout);
-    }
-    lastTimeout = window.setTimeout(cb, DEBOUNCE_INTERVAL);
-  };
-
+  function debounce(cb) {
+    const DEBOUNCE_INTERVAL = 500;
+    let lastTimeout = false;
+    return function (evt) {
+      if (lastTimeout) {
+        clearTimeout(lastTimeout);
+      }
+      lastTimeout = setTimeout(cb.bind(null, evt), DEBOUNCE_INTERVAL);
+    };
+  }
 
   window.util = {
     getRandomNumber,

@@ -26,61 +26,66 @@
 
   const filterHouseType = (item) => {
     const houseFilter = houseType.value;
+    let houseFilterResult = false;
 
     if (item.offer.type === houseFilter || houseFilter === FILTER_ALL) {
-      return true;
+      houseFilterResult = true;
     }
 
-    return false;
+    return houseFilterResult;
   };
 
   const filterHousePrice = (item) => {
     const priceFilter = housePrice.value;
+    let priceFilterResult = false;
 
     switch (priceFilter) {
       case FILTER_ALL:
-        return true;
+        priceFilterResult = true;
+        break;
 
       case `middle`:
         if (item.offer.price >= housePriceMap.middle.min && item.offer.price <= housePriceMap.middle.max) {
-          return true;
+          priceFilterResult = true;
         }
         break;
 
       case `low`:
         if (item.offer.price < housePriceMap.low.max) {
-          return true;
+          priceFilterResult = true;
         }
         break;
 
       case `high`:
         if (item.offer.price > housePriceMap.high.min) {
-          return true;
+          priceFilterResult = true;
         }
         break;
     }
 
-    return false;
+    return priceFilterResult;
   };
 
   const filterHouseRooms = (item) => {
     const roomsFilter = houseRooms.value;
+    let roomsFilterResult = false;
 
     if (item.offer.rooms === parseInt(roomsFilter, 10) || roomsFilter === FILTER_ALL) {
-      return true;
+      roomsFilterResult = true;
     }
 
-    return false;
+    return roomsFilterResult;
   };
 
   const filterHouseGuests = (item) => {
     const guestsFilter = houseGuests.value;
+    let guestsFilterResult = false;
 
     if (item.offer.guests === parseInt(guestsFilter, 10) || guestsFilter === FILTER_ALL) {
-      return true;
+      guestsFilterResult = true;
     }
 
-    return false;
+    return guestsFilterResult;
   };
 
   const filterHouseFeatures = (item) => {
@@ -112,7 +117,7 @@
     window.pin.addPins(filterData(data));
   };
 
-  filtersForm.addEventListener(`change`, onFiltersFormChange);
+  filtersForm.addEventListener(`change`, window.util.debounce(onFiltersFormChange));
 
   const onDataLoad = (response) => {
     data = response;

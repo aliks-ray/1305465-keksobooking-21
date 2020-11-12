@@ -1,98 +1,97 @@
 'use strict';
-(() => {
-  const fieldsets = document.getElementsByTagName(`fieldset`);
-  const successMessageTemplate = document.querySelector(`#success`).content.querySelector(`.success`);
-  const mainFormReset = document.querySelector(`.ad-form__reset`);
 
-  const formTurnOff = () => {
-    for (let i = 0; i < fieldsets.length; i++) {
-      fieldsets[i].disabled = true;
-    }
-  };
+const fieldsets = document.getElementsByTagName(`fieldset`);
+const successMessageTemplate = document.querySelector(`#success`).content.querySelector(`.success`);
+const mainFormReset = document.querySelector(`.ad-form__reset`);
 
-  const formTurnOn = function formTurnOn() {
-    for (let i = 0; i < fieldsets.length; i++) {
-      fieldsets[i].disabled = false;
-    }
-  };
+const formTurnOff = () => {
+  for (let i = 0; i < fieldsets.length; i++) {
+    fieldsets[i].disabled = true;
+  }
+};
 
-  const uploadSuccessHandler = () => {
-    const renderSuccessMessage = () => {
-      const successMessageElement = successMessageTemplate.cloneNode(true);
+const formTurnOn = function formTurnOn() {
+  for (let i = 0; i < fieldsets.length; i++) {
+    fieldsets[i].disabled = false;
+  }
+};
 
-      const escHandler = (evt) => {
-        if (evt.key === `Escape`) {
-          successMessageElement.remove();
-        }
-        document.removeEventListener(`keydown`, escHandler);
-        document.removeEventListener(`click`, clickHandler);
-      };
+const uploadSuccessHandler = () => {
+  const renderSuccessMessage = () => {
+    const successMessageElement = successMessageTemplate.cloneNode(true);
 
-      const clickHandler = () => {
+    const escHandler = (evt) => {
+      if (evt.key === `Escape`) {
         successMessageElement.remove();
-        document.removeEventListener(`click`, clickHandler);
-        document.removeEventListener(`keydown`, escHandler);
-      };
-
-      document.addEventListener(`keydown`, escHandler);
-      document.addEventListener(`click`, clickHandler);
-
-      return successMessageElement;
+      }
+      document.removeEventListener(`keydown`, escHandler);
+      document.removeEventListener(`click`, clickHandler);
     };
 
-    document.body.appendChild(renderSuccessMessage());
-    window.validation.mainForm.reset();
-    window.validation.checkFormValidity();
-    window.move.getAddress(window.move.pinHeightDisable);
+    const clickHandler = () => {
+      successMessageElement.remove();
+      document.removeEventListener(`click`, clickHandler);
+      document.removeEventListener(`keydown`, escHandler);
+    };
+
+    document.addEventListener(`keydown`, escHandler);
+    document.addEventListener(`click`, clickHandler);
+
+    return successMessageElement;
   };
 
-  const uploadErrorHandler = () => {
-    const errorMessageTemplate = document.querySelector(`#error`).content.querySelector(`.error`);
+  document.body.appendChild(renderSuccessMessage());
+  window.validation.mainForm.reset();
+  window.validation.checkFormValidity();
+  window.move.getAddress(window.move.pinHeightDisable);
+};
 
-    const renderErrorMessage = () => {
-      const errorMessageElement = errorMessageTemplate.cloneNode(true);
-      const errorMessageButton = errorMessageElement.querySelector(`.error__button`);
+const uploadErrorHandler = () => {
+  const errorMessageTemplate = document.querySelector(`#error`).content.querySelector(`.error`);
 
-      const escHandler = (evt) => {
-        if (evt.key === `Escape`) {
-          errorMessageElement.remove();
-        }
-        document.removeEventListener(`keydown`, escHandler);
-        document.removeEventListener(`click`, clickHandler);
-      };
+  const renderErrorMessage = () => {
+    const errorMessageElement = errorMessageTemplate.cloneNode(true);
+    const errorMessageButton = errorMessageElement.querySelector(`.error__button`);
 
-      const clickHandler = () => {
+    const escHandler = (evt) => {
+      if (evt.key === `Escape`) {
         errorMessageElement.remove();
-        document.removeEventListener(`click`, clickHandler);
-        document.removeEventListener(`keydown`, escHandler);
-      };
-
-      errorMessageButton.addEventListener(`click`, clickHandler);
-      document.addEventListener(`click`, clickHandler);
-      document.addEventListener(`keydown`, escHandler);
-
-      return errorMessageElement;
+      }
+      document.removeEventListener(`keydown`, escHandler);
+      document.removeEventListener(`click`, clickHandler);
     };
 
-    document.main.appendChild(renderErrorMessage());
+    const clickHandler = () => {
+      errorMessageElement.remove();
+      document.removeEventListener(`click`, clickHandler);
+      document.removeEventListener(`keydown`, escHandler);
+    };
+
+    errorMessageButton.addEventListener(`click`, clickHandler);
+    document.addEventListener(`click`, clickHandler);
+    document.addEventListener(`keydown`, escHandler);
+
+    return errorMessageElement;
   };
 
-  window.validation.mainForm.addEventListener(`submit`, (evt) => {
-    window.backend.save(new FormData(window.validation.mainForm), uploadSuccessHandler, uploadErrorHandler);
+  document.main.appendChild(renderErrorMessage());
+};
 
-    evt.preventDefault();
-    window.validation.mainForm.reset();
-    window.main.getDisablePages();
-  });
+window.validation.mainForm.addEventListener(`submit`, (evt) => {
+  window.backend.save(new FormData(window.validation.mainForm), uploadSuccessHandler, uploadErrorHandler);
 
-  mainFormReset.addEventListener(`click`, () => {
-    window.validation.mainForm.reset();
-    window.validation.checkFormValidity();
-    window.main.getDisablePages();
-  });
+  evt.preventDefault();
+  window.validation.mainForm.reset();
+  window.main.getDisablePages();
+});
 
-  window.form = {
-    formTurnOff,
-    formTurnOn
-  };
-})();
+mainFormReset.addEventListener(`click`, () => {
+  window.validation.mainForm.reset();
+  window.validation.checkFormValidity();
+  window.main.getDisablePages();
+});
+
+window.form = {
+  formTurnOff,
+  formTurnOn
+};

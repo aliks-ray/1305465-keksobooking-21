@@ -16,26 +16,26 @@ const formTurnOn = function formTurnOn() {
   }
 };
 
-const uploadSuccessHandler = () => {
+const onUploadSuccess = () => {
   const renderSuccessMessage = () => {
     const successMessageElement = successMessageTemplate.cloneNode(true);
 
-    const escHandler = (evt) => {
+    const onSuccessMessageEscapePress = (evt) => {
       if (evt.key === `Escape`) {
         successMessageElement.remove();
       }
-      document.removeEventListener(`keydown`, escHandler);
-      document.removeEventListener(`click`, clickHandler);
+      document.removeEventListener(`keydown`, onSuccessMessageEscapePress);
+      document.removeEventListener(`click`, onSuccessMessageClick);
     };
 
-    const clickHandler = () => {
+    const onSuccessMessageClick = () => {
       successMessageElement.remove();
-      document.removeEventListener(`click`, clickHandler);
-      document.removeEventListener(`keydown`, escHandler);
+      document.removeEventListener(`click`, onSuccessMessageClick);
+      document.removeEventListener(`keydown`, onSuccessMessageEscapePress);
     };
 
-    document.addEventListener(`keydown`, escHandler);
-    document.addEventListener(`click`, clickHandler);
+    document.addEventListener(`keydown`, onSuccessMessageEscapePress);
+    document.addEventListener(`click`, onSuccessMessageClick);
 
     return successMessageElement;
   };
@@ -43,55 +43,54 @@ const uploadSuccessHandler = () => {
   document.body.appendChild(renderSuccessMessage());
   window.validation.mainForm.reset();
   window.validation.checkFormValidity();
-  window.move.getAddress(window.move.pinHeightDisable);
+  window.move.setAddress(window.move.pinHeightDisable);
 };
 
-const uploadErrorHandler = () => {
+const onUploadError = () => {
   const errorMessageTemplate = document.querySelector(`#error`).content.querySelector(`.error`);
 
   const renderErrorMessage = () => {
     const errorMessageElement = errorMessageTemplate.cloneNode(true);
     const errorMessageButton = errorMessageElement.querySelector(`.error__button`);
 
-    const escHandler = (evt) => {
+    const onErrorMessageEscapePress = (evt) => {
       if (evt.key === `Escape`) {
         errorMessageElement.remove();
       }
-      document.removeEventListener(`keydown`, escHandler);
-      document.removeEventListener(`click`, clickHandler);
+      document.removeEventListener(`keydown`, onErrorMessageEscapePress);
+      document.removeEventListener(`click`, onErrorMessageClick);
     };
 
-    const clickHandler = () => {
+    const onErrorMessageClick = () => {
       errorMessageElement.remove();
-      document.removeEventListener(`click`, clickHandler);
-      document.removeEventListener(`keydown`, escHandler);
+      document.removeEventListener(`click`, onErrorMessageClick);
+      document.removeEventListener(`keydown`, onErrorMessageEscapePress);
     };
 
-    errorMessageButton.addEventListener(`click`, clickHandler);
-    document.addEventListener(`click`, clickHandler);
-    document.addEventListener(`keydown`, escHandler);
+    errorMessageButton.addEventListener(`click`, onErrorMessageClick);
+    document.addEventListener(`click`, onErrorMessageClick);
+    document.addEventListener(`keydown`, onErrorMessageEscapePress);
 
     return errorMessageElement;
   };
 
-  document.main.appendChild(renderErrorMessage());
+  document.body.appendChild(renderErrorMessage());
 };
 
 window.validation.mainForm.addEventListener(`submit`, (evt) => {
-  window.backend.save(new FormData(window.validation.mainForm), uploadSuccessHandler, uploadErrorHandler);
-
   evt.preventDefault();
+  window.backend.save(new FormData(window.validation.mainForm), onUploadSuccess, onUploadError);
   window.validation.mainForm.reset();
-  window.main.getDisablePages();
+  window.main.disactivatePage();
 });
 
 mainFormReset.addEventListener(`click`, () => {
   window.validation.mainForm.reset();
   window.validation.checkFormValidity();
-  window.main.getDisablePages();
+  window.main.disactivatePage();
 });
 
 window.form = {
-  formTurnOff,
-  formTurnOn
+  turnOff: formTurnOff,
+  turnOn: formTurnOn
 };

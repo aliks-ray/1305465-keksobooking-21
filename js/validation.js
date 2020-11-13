@@ -39,8 +39,8 @@ const disableCapacityOptions = (inputValue) => {
   capacityOptions.forEach(function (it) {
     it.disabled = true;
   });
-  roomGuestRation[inputValue].forEach(function (it) {
-    capacitySelect.querySelector(`option` + `[value="` + it + `"]`).disabled = false;
+  roomGuestRation[inputValue].forEach((it) => {
+    capacitySelect.querySelector(`option` + `[value="${it}"]`).disabled = false;
     capacitySelect.value = it;
   });
 };
@@ -57,11 +57,11 @@ const onRoomNumberSelectChange = (evt) => {
   checkPlaceValidity();
 };
 
-offerTimeInSelect.addEventListener(`change`, function () {
+offerTimeInSelect.addEventListener(`change`, () => {
   offerTimeOutSelect.value = offerTimeInSelect.value;
 });
 
-offerTimeOutSelect.addEventListener(`change`, function () {
+offerTimeOutSelect.addEventListener(`change`, () => {
   offerTimeInSelect.value = offerTimeOutSelect.value;
 });
 

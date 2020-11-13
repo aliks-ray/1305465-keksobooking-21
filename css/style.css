@@ -1246,3 +1246,25 @@ fieldset {
 .hidden {
   display: none;
 }
+
+/**
+ * Сообщение об ошибке загрузки данных с сервера
+ */
+
+ .error__upload {
+   position: absolute;
+   z-index: 100;
+   margin: auto;
+   padding: 30px;
+   width: 900px;
+   top: 50%;
+   left: 50%;
+   transform: translate(-50%, -50%);
+   text-align: center;
+   background-color: #be3827;
+   border: #be3827 1px solid;
+   border-radius: 10px;
+   font-size: 30px;
+   color: white;
+   box-shadow: 0 10px 10px rgba(0, 1, 1, 0.3);
+ }

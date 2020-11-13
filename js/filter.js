@@ -121,11 +121,10 @@ filtersForm.addEventListener(`change`, window.util.debounce(onFiltersFormChange)
 
 const onDataLoad = (response) => {
   data = response;
-  const filteredData = window.filter.filterData(data);
+  const filteredData = filterData(data);
   window.pin.addPins(filteredData, window.pin.PINS_MAX);
 };
 
 window.filter = {
-  filterData,
   onDataLoad
 };

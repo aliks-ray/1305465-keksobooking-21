@@ -8,7 +8,7 @@ const similarCardTemplate = document.querySelector(`#card`).content.querySelecto
 const beforeThisBlock = document.querySelector(`.map__filters-container`);
 let cardElement;
 
-const removeCard = function () {
+const removeCard = () => {
   if (cardElement) {
     cardElement.remove();
   }
@@ -68,21 +68,21 @@ const createCard = (bookingItem) => {
     photoElement.appendChild(img).classList.add(`popup__photo`);
   }
 
-  const onCardCloseButtonClick = function () {
+  const onCardCloseButtonClick = () => {
     removeCard();
     window.pin.removeClassActivePin();
     popupCloseButton.removeEventListener(`click`, onCardCloseButtonClick);
     document.removeEventListener(`keydown`, onCardEscapePress);
   };
 
-  const onCardCloseButtonEnterPress = function (evt) {
+  const onCardCloseButtonEnterPress = (evt) => {
     if (evt.key === `Enter`) {
       removeCard();
       window.pin.removeClassActivePin();
     }
   };
 
-  const onCardEscapePress = function (evt) {
+  const onCardEscapePress = (evt) => {
     if (evt.key === `Escape`) {
       removeCard();
       window.pin.removeClassActivePin();
@@ -98,6 +98,6 @@ const createCard = (bookingItem) => {
 };
 
 window.card = {
-  createCard,
-  removeCard,
+  create: createCard,
+  remove: removeCard,
 };

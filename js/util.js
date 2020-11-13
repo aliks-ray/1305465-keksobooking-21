@@ -1,30 +1,6 @@
 'use strict';
 
-const getRandomNumber = (max, min = 0) => {
-  return Math.floor(Math.random() * (max - min) + min);
-};
-
-const getRandomElement = (elements) => {
-  return elements[Math.floor(Math.random() * elements.length)];
-};
-
-function getRandomProperty(obj) {
-  const keys = Object.keys(obj);
-  return obj[keys[getRandomNumber(0, keys.length)]];
-}
-
-const getRandomArray = (primaryElements) => {
-  const copyElements = primaryElements.slice();
-  let j;
-  let temp;
-  for (let i = copyElements.length - 1; i > 0; i--) {
-    j = Math.floor(Math.random() * (i + 1));
-    temp = copyElements[i];
-    copyElements[i] = copyElements[j];
-    copyElements[j] = temp;
-  }
-  return copyElements.slice(getRandomNumber(0, copyElements.length));
-};
+const DEBOUNCE_INTERVAL = 500;
 
 function getNoun(number, one, two, five) {
   let n = Math.abs(number);
@@ -43,7 +19,6 @@ function getNoun(number, one, two, five) {
 }
 
 function debounce(cb) {
-  const DEBOUNCE_INTERVAL = 500;
   let lastTimeout = false;
   return function (evt) {
     if (lastTimeout) {
@@ -54,10 +29,6 @@ function debounce(cb) {
 }
 
 window.util = {
-  getRandomNumber,
-  getRandomElement,
-  getRandomProperty,
-  getRandomArray,
   getNoun,
   debounce
 };

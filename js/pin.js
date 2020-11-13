@@ -7,7 +7,7 @@ const PINS_MAX = 5;
 const similarPinTemplate = document.querySelector(`#pin`).content.querySelector(`.map__pin`);
 const similarListPins = document.querySelector(`.map__pins`);
 
-const removeClassActivePin = function () {
+const removeClassActivePin = () => {
   let activePin = document.querySelector(`.map__pin--active`);
   if (activePin) {
     activePin.classList.remove(`map__pin--active`);
@@ -23,15 +23,15 @@ const getPin = (templateObject) => {
   pinElement.querySelector(`img`).src = templateObject.author.avatar;
   pinElement.querySelector(`img`).alt = templateObject.offer.title;
 
-  pinElement.addEventListener(`click`, function () {
+  pinElement.addEventListener(`click`, () => {
     removeClassActivePin();
     pinElement.classList.add(`map__pin--active`);
-    window.card.createCard(templateObject);
+    window.card.create(templateObject);
   });
 
-  pinElement.addEventListener(`keydown`, function (evt) {
+  pinElement.addEventListener(`keydown`, (evt) => {
     if (evt.key === `Enter`) {
-      window.card.createCard(templateObject);
+      window.card.create(templateObject);
     }
   });
 
@@ -43,7 +43,7 @@ const addPins = (preparedPins) => {
   window.pin.pinsRemover();
   const fragment = document.createDocumentFragment();
 
-  preparedPins.forEach(function (element) {
+  preparedPins.forEach((element) => {
     fragment.appendChild(getPin(element));
   });
 
@@ -52,15 +52,13 @@ const addPins = (preparedPins) => {
 
 const pinsRemover = () => {
   const pinsItems = document.querySelectorAll(`.map__pin:not(.map__pin--main)`);
-  for (let i = 0; i < pinsItems.length; i++) {
-    pinsItems[i].remove();
-  }
+  pinsItems.forEach((pinItem) => pinItem.remove());
 };
 
 const cardRemover = () => {
   const mapCard = document.querySelector(`.map__card`);
   if (mapCard) {
-    window.card.removeCard();
+    window.card.remove();
   }
 };
 

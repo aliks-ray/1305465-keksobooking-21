@@ -24,11 +24,11 @@ const limits = {
   right: Math.floor(Borders.RIGHT - MAIN_PIN_WIDTH / 2),
 };
 
-const getAddress = (pinHeight) => {
+const setAddress = (pinHeight) => {
   addressData.value = Math.floor(parseInt(mainPin.style.left, 10) + MAIN_PIN_WIDTH / 2) + `, ` + Math.floor((parseInt(mainPin.style.top, 10) + pinHeight));
 };
 
-getAddress();
+setAddress();
 
 let getDefaultPinPosition = () => {
   mainPin.style.left = defaultPinX;
@@ -44,8 +44,7 @@ const moveMainPin = (targetElement, drivenElement) => {
       y: evt.clientY
     };
 
-    const onMouseMove = function (moveEvt) {
-
+    const onMouseMove = (moveEvt) => {
       moveEvt.preventDefault();
 
       let shift = {
@@ -76,10 +75,10 @@ const moveMainPin = (targetElement, drivenElement) => {
       drivenElement.style.top = newPositionY + `px`;
       drivenElement.style.left = newPositionX + `px`;
 
-      getAddress(ACTIVE_PIN_HEIGHT);
+      setAddress(ACTIVE_PIN_HEIGHT);
     };
 
-    const onMouseUp = function (upEvt) {
+    const onMouseUp = (upEvt) => {
       upEvt.preventDefault();
 
       document.removeEventListener(`mousemove`, onMouseMove);
@@ -96,10 +95,9 @@ const moveMainPin = (targetElement, drivenElement) => {
 moveMainPin(mainPin, mainPin);
 
 window.move = {
-  getAddress,
+  setAddress,
   mainPin,
   pinHeightDisable,
   ACTIVE_PIN_HEIGHT,
-  moveMainPin,
   getDefaultPinPosition
 };

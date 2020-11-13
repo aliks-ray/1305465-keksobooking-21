@@ -8,11 +8,11 @@ const StatusCode = {
   OK: 200
 };
 
-const createRequest = function (method, url, onLoad, onError) {
+const createRequest = (method, url, onLoad, onError) => {
   const xhr = new XMLHttpRequest();
   xhr.responseType = `json`;
 
-  xhr.addEventListener(`load`, function () {
+  xhr.addEventListener(`load`, () => {
     switch (xhr.status) {
       case StatusCode.OK:
         onLoad(xhr.response);
@@ -23,11 +23,11 @@ const createRequest = function (method, url, onLoad, onError) {
     }
   });
 
-  xhr.addEventListener(`error`, function () {
+  xhr.addEventListener(`error`, () => {
     onError(`Ошибка соединения`);
   });
 
-  xhr.addEventListener(`timeout`, function () {
+  xhr.addEventListener(`timeout`, () => {
     onError(`Запрос не успел выполниться за ` + xhr.timeout + `мс.`);
   });
 
@@ -37,40 +37,24 @@ const createRequest = function (method, url, onLoad, onError) {
   return xhr;
 };
 
-const load = function (onLoad, onError) {
+const load = (onLoad, onError) => {
   const xhr = createRequest(`GET`, LOAD, onLoad, onError);
   xhr.send();
 };
 
-const save = function (data, onLoad, onError) {
+const save = (data, onLoad, onError) => {
   const xhr = createRequest(`POST`, SAVE, onLoad, onError);
   xhr.send(data);
 };
 
 const onError = (errorMessage) => {
   const errorElement = document.createElement(`div`);
-  errorElement.style =
-  `z-index: 100;
-  margin: auto;
-  padding: 30px;
-  width: 900px;
-  top: 50%;
-  left: 50%;
-  text-align: center;
-  background-color: #be3827;
-  border: #be3827 1px solid;
-  border-radius: 10px;
-  color: white;
-  box-shadow: 0 10px 10px rgba(0, 1, 1, 0.3);`;
-  errorElement.style.position = `absolute`;
-  errorElement.style.left = 0;
-  errorElement.style.right = 0;
-  errorElement.style.fontSize = `30px`;
+  errorElement.classList.add(`error__upload`);
 
   errorElement.textContent = errorMessage;
   document.body.insertAdjacentElement(`afterbegin`, errorElement);
 
-  setTimeout(function () {
+  setTimeout(() => {
     errorElement.remove();
   }, 5000);
 };

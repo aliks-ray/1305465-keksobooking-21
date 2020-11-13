@@ -52,7 +52,8 @@ const addPins = (preparedPins) => {
 
 const pinsRemover = () => {
   const pinsItems = document.querySelectorAll(`.map__pin:not(.map__pin--main)`);
-  pinsItems.forEach((pinItem) => pinItem.remove());
+  pinsItems.forEach((pinItem) =>
+    pinItem.remove());
 };
 
 const cardRemover = () => {

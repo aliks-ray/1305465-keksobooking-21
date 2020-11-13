@@ -10,7 +10,7 @@ const formTurnOff = () => {
   }
 };
 
-const formTurnOn = function formTurnOn() {
+const formTurnOn = () => {
   for (let i = 0; i < fieldsets.length; i++) {
     fieldsets[i].disabled = false;
   }

@@ -1,12 +1,13 @@
 'use strict';
 
+const MAIN_PIN_WIDTH = 62;
+const MAIN_PIN_HEIGHT = 62;
+const ACTIVE_PIN_HEIGHT = 84;
+const pinHeightDisable = MAIN_PIN_HEIGHT / 2;
+
 const mainPin = document.querySelector(`.map__pin--main`);
 const addressData = document.querySelector(`#address`);
 
-const MAIN_PIN_WIDTH = 62;
-const MAIN_PIN_HEIGHT = 62;
-const pinHeightDisable = MAIN_PIN_HEIGHT / 2;
-const ACTIVE_PIN_HEIGHT = 84;
 const defaultPinX = mainPin.style.left;
 const defaultPinY = mainPin.style.top;
 

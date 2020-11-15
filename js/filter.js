@@ -1,15 +1,16 @@
 'use strict';
 
-let data = [];
-
 const MAX_PIN_AMOUNT = 5;
 const FILTER_ALL = `any`;
+
+let data = [];
 
 const filtersForm = document.querySelector(`.map__filters`);
 const houseType = filtersForm.querySelector(`#housing-type`);
 const housePrice = filtersForm.querySelector(`#housing-price`);
 const houseRooms = filtersForm.querySelector(`#housing-rooms`);
 const houseGuests = filtersForm.querySelector(`#housing-guests`);
+const houseFeatures = filtersForm.querySelectorAll(`.map__checkbox`);
 
 const housePriceMap = {
   middle: {
@@ -125,6 +126,17 @@ const onDataLoad = (response) => {
   window.pin.addPins(filteredData, window.pin.PINS_MAX);
 };
 
+const filterReset = () => {
+  houseType.value = FILTER_ALL;
+  housePrice.value = FILTER_ALL;
+  houseRooms.value = FILTER_ALL;
+  houseGuests.value = FILTER_ALL;
+  houseFeatures.forEach((element)=> {
+    element.checked = false;
+  });
+};
+
 window.filter = {
-  onDataLoad
+  onDataLoad,
+  reset: filterReset
 };

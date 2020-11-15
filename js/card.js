@@ -70,7 +70,7 @@ const createCard = (bookingItem) => {
 
   const onCardCloseButtonClick = () => {
     removeCard();
-    window.pin.removeClassActivePin();
+    window.pin.removeClassActive();
     popupCloseButton.removeEventListener(`click`, onCardCloseButtonClick);
     document.removeEventListener(`keydown`, onCardEscapePress);
   };
@@ -78,14 +78,14 @@ const createCard = (bookingItem) => {
   const onCardCloseButtonEnterPress = (evt) => {
     if (evt.key === `Enter`) {
       removeCard();
-      window.pin.removeClassActivePin();
+      window.pin.removeClassActive();
     }
   };
 
   const onCardEscapePress = (evt) => {
     if (evt.key === `Escape`) {
       removeCard();
-      window.pin.removeClassActivePin();
+      window.pin.removeClassActive();
     }
     popupCloseButton.removeEventListener(`click`, onCardCloseButtonClick);
     document.removeEventListener(`keydown`, onCardEscapePress);

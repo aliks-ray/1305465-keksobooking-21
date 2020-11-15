@@ -90,6 +90,7 @@ mainFormReset.addEventListener(`click`, () => {
   window.main.disactivatePage();
 });
 
+
 window.form = {
   turnOff: formTurnOff,
   turnOn: formTurnOn

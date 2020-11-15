@@ -20,8 +20,10 @@ const onMainPinKeyDown = (evt) => {
 };
 
 const disactivatePage = () => {
-  window.pin.pinsRemover();
-  window.pin.cardRemover();
+  window.pin.removePins();
+  window.pin.removeCards();
+  window.filter.reset();
+  window.prewiew.clear();
   map.classList.add(`map--faded`);
   window.validation.mainForm.classList.add(`ad-form--disabled`);
   window.move.getDefaultPinPosition();

@@ -39,8 +39,8 @@ const getPin = (templateObject) => {
 };
 
 const addPins = (preparedPins) => {
-  window.pin.cardRemover();
-  window.pin.pinsRemover();
+  window.pin.removeCards();
+  window.pin.removePins();
   const fragment = document.createDocumentFragment();
 
   preparedPins.forEach((element) => {
@@ -50,13 +50,13 @@ const addPins = (preparedPins) => {
   similarListPins.appendChild(fragment);
 };
 
-const pinsRemover = () => {
+const removePins = () => {
   const pinsItems = document.querySelectorAll(`.map__pin:not(.map__pin--main)`);
   pinsItems.forEach((pinItem) =>
     pinItem.remove());
 };
 
-const cardRemover = () => {
+const removeCards = () => {
   const mapCard = document.querySelector(`.map__card`);
   if (mapCard) {
     window.card.remove();
@@ -65,8 +65,8 @@ const cardRemover = () => {
 
 window.pin = {
   addPins,
-  removeClassActivePin,
-  pinsRemover,
-  cardRemover,
+  removeClassActive: removeClassActivePin,
+  removePins,
+  removeCards,
   PINS_MAX
 };
